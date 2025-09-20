@@ -30,30 +30,22 @@ class TestPandasExercises(unittest.TestCase):
         df = pd.DataFrame({'a': [1, 2]})
         assert agregar_columna(df, 'b', [3, 4])['b'].tolist() == [3, 4] 
   
-    def test_add_arrays(self):
-        arr1 = np.array([1, 2, 3])
-        arr2 = np.array([4, 5, 6])
-        result = add_arrays(arr1, arr2)
-        expected = np.array([5, 7, 9])
-        np.testing.assert_array_equal(result, expected)
+    def test_crear_indexacion_jerarquica(self):
+        s = crear_indexacion_jerarquica()
+        assert s.loc['a', 1] == 1
 
-    def test_subtract_arrays(self):
-        arr1 = np.array([4, 5, 6])
-        arr2 = np.array([1, 2, 3])
-        result = subtract_arrays(arr1, arr2)
-        expected = np.array([3, 3, 3])
-        np.testing.assert_array_equal(result, expected)
+    def test_suma_columnas(self):
+        df = pd.DataFrame({'x': [1, 2], 'y': [3, 4]})
+        assert suma_columnas(df, 'x', 'y').tolist() == [4, 6]
 
-    def test_multiply_arrays(self):
-        arr1 = np.array([1, 2, 3])
-        arr2 = np.array([4, 5, 6])
-        result = multiply_arrays(arr1, arr2)
-        expected = np.array([4, 10, 18])
-        np.testing.assert_array_equal(result, expected)
-
-    def test_divide_arrays(self):
-        arr1 = np.array([4, 5, 6])
-        arr2 = np.array([2, 2, 2])
+    def test_rellenar_nulos(self):
+        df = pd.DataFrame({'a': [1, None, 3]})
+        assert rellenar_nulos(df, 0)['a'].tolist() == [1.0, 0.0, 3.0]
+        
+    def test_agrupar_y_promediar(self):
+        df = pd.DataFrame({'grupo': ['A', 'A', 'B', 'B'], 'valor': [10, 20, 30, 40]})
+        resultado = agrupar_y_promediar(df, 'grupo', 'valor')
+        assert resultado['A'] == 15 and resultado['B'] == 35
         result = divide_arrays(arr1, arr2)
         expected = np.array([2, 2.5, 3])
         np.testing.assert_array_equal(result, expected)
