@@ -8,36 +8,28 @@ from ejercicios_pandas import (crear_serie, crear_dataframe, seleccionar_columna
                                combinar_dataframes, concatenar_dataframes,
                                transformar_tipo)
 
-class TestNumpyExercises(unittest.TestCase):
+class TestPandasExercises(unittest.TestCase):
 
-    def test_rand_int(self):
-        '''TODO: Reemplaza prueba por numeros enteros entre 0 100 y logitud de ndarray'''
-        result = rand_int()
-        assert result.size == 10
-        assert result.dtype == np.int64
+    def test_crear_serie(self):
+        assert crear_serie([1, 2, 3]).tolist() == [1, 2, 3]
 
-    def test_rand_float(self):
-        '''TODO: reemplaza prueba por números flotantes entre 0 y 1 y logitud de ndarray'''
-        np.random.seed(10)
-        result = rand_float()
-        assert result.size == 5
-        assert result.dtype == np.float64
+    def test_crear_dataframe(self):
+        df = crear_dataframe({'a': [1, 2], 'b': [3, 4]})
+        assert df.shape == (2, 2)
+        assert list(df.columns) == ['a', 'b']
 
-    def test_first_10_primes(self):
-        result = first_10_primes()
-        expected = np.array([ 2,  3,  5,  7, 11, 13, 17, 19, 23, 29])
-        np.testing.assert_array_equal(result, expected)
+    def test_seleccionar_columna(self):
+        df = pd.DataFrame({'x': [10, 20], 'y': [30, 40]})
+        assert seleccionar_columna(df, 'x').tolist() == [10, 20]
 
-    def test_squares(self):
-        result = squares()
-        expected = np.array([1, 4, 9, 16, 25, 36, 49, 64, 81, 100])
-        np.testing.assert_array_equal(result, expected)
-
-    def test_cubes(self):
-        result = cubes()
-        expected = np.array([1, 8, 27, 64, 125, 216, 343, 512, 729, 1000])
-        np.testing.assert_array_equal(result, expected)
-
+    def test_filtrar_por_condicion(self):
+        df = pd.DataFrame({'edad': [15, 25, 35]})
+        assert filtrar_por_condicion(df, 'edad', 20)['edad'].tolist() == [25, 35]
+      
+    def test_agregar_columna(self):
+        df = pd.DataFrame({'a': [1, 2]})
+        assert agregar_columna(df, 'b', [3, 4])['b'].tolist() == [3, 4] 
+  
     def test_add_arrays(self):
         arr1 = np.array([1, 2, 3])
         arr2 = np.array([4, 5, 6])
