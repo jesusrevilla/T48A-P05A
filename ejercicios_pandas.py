@@ -1,5 +1,4 @@
 import pandas as pd
-import doctest
 
 def crear_serie(lista):
     crear_serie([1, 2, 3]).tolist()
