@@ -10,4 +10,4 @@ def crear_dataframe(diccionario):
     df.shape
     (2, 2)
     list(df.columns)
-    ['a', 'b']
+    ['a', 'b'
