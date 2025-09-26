@@ -21,7 +21,7 @@ def crear_dataframe(diccionario):
     >>> list(df.columns)
     ['a', 'b']
     """
-    pass
+    return pd.DataFrame(diccionario)
 
 def seleccionar_columna(df, columna):
     """
@@ -31,7 +31,7 @@ def seleccionar_columna(df, columna):
     >>> seleccionar_columna(df, 'x').tolist()
     [10, 20]
     """
-    pass
+    return df[columna]
 
 def filtrar_por_condicion(df, columna, valor):
     """
@@ -41,7 +41,7 @@ def filtrar_por_condicion(df, columna, valor):
     >>> filtrar_por_condicion(df, 'edad', 20)['edad'].tolist()
     [25, 35]
     """
-    pass
+    return df[df[columna] > valor]
 
 def agregar_columna(df, nueva_columna, valores):
     """
@@ -51,17 +51,25 @@ def agregar_columna(df, nueva_columna, valores):
     >>> agregar_columna(df, 'b', [3, 4])['b'].tolist()
     [3, 4]
     """
-    pass
+    df[nueva_columna] = valores
+    return df
 
 def crear_indexacion_jerarquica():
     """
     Crea una Serie con indexación jerárquica.
 
     >>> s = crear_indexacion_jerarquica()
-    >>> s.loc['a', 1]
+    >>> int(s.loc['a', 1])
     1
     """
-    pass
+    data = [1, 2, 3, 4]
+
+    index = pd.MultiIndex.from_tuples([('a', 1), ('a', 2), ('b', 1), ('b', 2)],
+                                      names=['primer_nivel', 'segundo_nivel'])
+
+    s = pd.Series(data, index=index)
+
+    return s
 
 def suma_columnas(df, col1, col2):
     """
@@ -73,6 +81,16 @@ def suma_columnas(df, col1, col2):
     """
     pass
 
+def suma_columnas(df, col1, col2):
+    """
+    Suma dos columnas de un DataFrame.
+
+    >>> df = pd.DataFrame({'x': [1, 2], 'y': [3, 4]})
+    >>> suma_columnas(df, 'x', 'y').tolist()
+    [4, 6]
+    """
+    return df[col1] + df[col2]
+
 def rellenar_nulos(df, valor):
     """
     Rellena valores nulos con un valor dado.
@@ -81,7 +99,7 @@ def rellenar_nulos(df, valor):
     >>> rellenar_nulos(df, 0)['a'].tolist()
     [1.0, 0.0, 3.0]
     """
-    pass
+    return df.fillna(valor)
 
 def agrupar_y_promediar(df, columna_agrupacion, columna_valores):
     """
@@ -89,10 +107,10 @@ def agrupar_y_promediar(df, columna_agrupacion, columna_valores):
 
     >>> df = pd.DataFrame({'grupo': ['A', 'A', 'B', 'B'], 'valor': [10, 20, 30, 40]})
     >>> resultado = agrupar_y_promediar(df, 'grupo', 'valor')
-    >>> resultado['A'] == 15 and resultado['B'] == 35
+    >>> bool(resultado['A'] == 15 and resultado['B'] == 35)
     True
     """
-    pass
+    return df.groupby(columna_agrupacion)[columna_valores].mean()
 
 def ordenar_dataframe(df, columna):
     """
@@ -102,7 +120,7 @@ def ordenar_dataframe(df, columna):
     >>> ordenar_dataframe(df, 'a')['a'].tolist()
     [1, 2, 3]
     """
-    pass
+    return df.sort_values(by=columna).reset_index(drop=True)
 
 def combinar_dataframes(df1, df2, clave):
     """
@@ -114,7 +132,7 @@ def combinar_dataframes(df1, df2, clave):
     >>> combinado.shape
     (2, 3)
     """
-    pass
+    return pd.merge(df1, df2, on=clave)
 
 def concatenar_dataframes(lista_df):
     """
@@ -126,7 +144,7 @@ def concatenar_dataframes(lista_df):
     >>> concatenado['a'].tolist()
     [1, 2]
     """
-    pass
+    return pd.concat(lista_df, ignore_index=True)
 
 def transformar_tipo(df, columna, tipo):
     """
@@ -136,4 +154,6 @@ def transformar_tipo(df, columna, tipo):
     >>> transformar_tipo(df, 'a', int)['a'].tolist()
     [1, 2]
     """
-    pass
+    df[columna] = df[columna].astype(tipo)
+    return df
+
